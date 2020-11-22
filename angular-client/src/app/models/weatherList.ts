@@ -1,4 +1,5 @@
 export interface weatherList {
-  min: number;
-  max: number;
+  weatherForecastDate: string;
+  weatherForecastDescription: string;
+  WeatherForecastIcon: string;
 }

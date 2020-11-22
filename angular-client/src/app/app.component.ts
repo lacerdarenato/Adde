@@ -1,122 +1,44 @@
-import { Component, OnInit } from "@angular/core";
-import { FuncionarioService } from "./services/Funcionario.service";
+import { Component } from "@angular/core";
+import { FuncionarioService } from "./services/funcionario.service";
 import { currentWeather } from "./models/currentWeather";
-import { NgForm } from "@angular/forms";
 import { weatherList } from "./models/weatherList";
+import { requestCurrentWeather } from './models/requestCurrentWeather';
+import { requestForecastWeatherList } from './models/requestForecastWeatherList'
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"],
 })
-export class AppComponent implements OnInit {
-  Funcionario = {} as Funcionario;
-  faixaSalarial = {} as faixaSalarial;
-  Funcionarios: Funcionario[];
-  FuncionariosPorCpf: Funcionario;
-  FuncionarioPorNome: Funcionario;
-  listaFuncionarios: Funcionario[] = [];
-  ListaFuncionariosPorSalario: Funcionario[] = [];
-  ListaFuncionariosPorCargo: Funcionario[] = [];
-  ListaFuncionariosPorStatus: Funcionario[] = [];
+export class AppComponent {
+  currentWeather = {} as currentWeather;
+  weatherList: weatherList[] = [];
+  requestCurrentWeather = {} as requestCurrentWeather;
+  requestForecastWeatherList = {} as requestForecastWeatherList;
+
   MostrarLista: Boolean = true;
 
   constructor(private FuncionarioService: FuncionarioService) { }
 
-  ngOnInit() {
-    this.getFuncionarios();
-  }
-
-  // defini se um Funcionarioro será criado ou atualizado
-  saveFuncionario(form: NgForm) {
-    if (
-      this.listaFuncionarios.find((item) => item.Cpf == this.Funcionario.Cpf)
-    ) {
-      this.FuncionarioService.updateFuncionario(this.Funcionario).subscribe(
-        () => {
-          this.cleanForm(form);
+  getCurrentWeather() {
+    this.FuncionarioService.getCurrentWeather(
+      this.requestCurrentWeather.city,
+      this.requestCurrentWeather.state).subscribe(
+        (currentWeather: currentWeather) => {
+          this.currentWeather = currentWeather;
         }
       );
-    } else {
-      this.FuncionarioService.saveFuncionario(this.Funcionario).subscribe(
-        () => {
-          this.cleanForm(form);
+  }
+
+  getForecastWeather() {
+    this.FuncionarioService.getForecastWeather(
+      this.requestForecastWeatherList.city,
+      this.requestForecastWeatherList.country,
+      this.requestForecastWeatherList.days).subscribe(
+        (weatherList: weatherList[]) => {
+          this.weatherList = weatherList;
+          this.MostrarLista = true;
         }
       );
-    }
-  }
-
-  // Chama o serviço para obtém todos os Funcionarioros
-  getFuncionarios() {
-    this.FuncionarioService.getFuncionarios().subscribe(
-      (Funcionarios: Funcionario[]) => {
-        this.Funcionarios = Funcionarios;
-        this.listaFuncionarios = Funcionarios;
-      }
-    );
-  }
-
-  getFuncionarioNome() {
-    this.FuncionarioService.getFuncionariosPorNome(
-      this.Funcionario.Nome
-    ).subscribe((Funcionarios: Funcionario) => {
-      this.FuncionarioPorNome = Funcionarios;
-      this.MostrarLista = true;
-    });
-  }
-
-  getFuncionarioCpf() {
-    this.FuncionarioService.getFuncionariosPorCpf(
-      this.Funcionario.Cpf
-    ).subscribe((Funcionarios: Funcionario) => {
-      this.FuncionariosPorCpf = Funcionarios;
-      this.MostrarLista = true;
-    });
-  }
-
-  getFuncionarioPorCargo() {
-    this.FuncionarioService.getFuncionariosPorCargo(
-      this.Funcionario.Cargo
-    ).subscribe((Funcionarios: Funcionario[]) => {
-      this.ListaFuncionariosPorCargo = Funcionarios;
-      this.MostrarLista = true;
-    });
-  }
-
-  getFuncionarioPorSalario() {
-    this.FuncionarioService.getFuncionariosPorSalario(
-      this.faixaSalarial.min,
-      this.faixaSalarial.max
-    ).subscribe((Funcionarios: Funcionario[]) => {
-      this.ListaFuncionariosPorSalario = Funcionarios;
-      this.MostrarLista = true;
-    });
-  }
-
-  getFuncionarioPorStatus() {
-    this.FuncionarioService.getFuncionarioPorStatus(
-      this.Funcionario.Status
-    ).subscribe((Funcionarios: Funcionario[]) => {
-      this.ListaFuncionariosPorStatus = Funcionarios;
-      this.MostrarLista = true;
-    });
-  }
-
-  // deleta um Funcionarioro
-  deleteFuncionario(Funcionario: Funcionario) {
-    this.FuncionarioService.deleteFuncionario(Funcionario).subscribe(() => {
-      this.MostrarLista = false;
-    });
-  }
-
-  // copia o Funcionarioro para ser editado.
-  editFuncionario(Funcionario: Funcionario) {
-    this.Funcionario = { ...Funcionario };
-  }
-
-  // limpa o formulario
-  cleanForm(form: NgForm) {
-    // this.getFuncionarios();
-    form.resetForm();
   }
 }
