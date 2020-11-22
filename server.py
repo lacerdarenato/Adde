@@ -32,7 +32,23 @@ class Weather(Resource):
         return currentWeatherObject
 
 
+class ForecastWeatherForDays(Resource):
+
+    def get(self, city, country, days):
+        parametros = {'city': city,
+                      'country': country,
+                      'days': days,
+                      'lang': 'pt',
+                      'key': '258eae717aea45d39177786791a48fc7'}
+        forecastWeather = requests.get(
+            'https://api.weatherbit.io/v2.0/forecast/daily', params=parametros).json()
+
+        return forecastWeather
+
+
 api.add_resource(Weather, '/weather/<string:city>/<string:state>')
+api.add_resource(ForecastWeatherForDays,
+                 '/forecastWeather/<string:city>/<string:country>/<string:days>')
 
 if __name__ == '__main__':
     app.run(port=5002)
