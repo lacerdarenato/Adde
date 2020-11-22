@@ -17,19 +17,7 @@ class Weather(Resource):
         currentWeatherJson = requests.get(
             'https://api.weatherbit.io/v2.0/current', params=parametros).json()
 
-        temperature = currentWeatherJson['data'][0]['temp']
-        city_name = currentWeatherJson['data'][0]['city_name']
-        weatherDescription = currentWeatherJson['data'][0]['weather']['description']
-        icon = currentWeatherJson['data'][0]['weather']['icon']
-
-        currentWeatherObject = {
-            'temperature': temperature,
-            'city_name': city_name,
-            'weatherDescription': weatherDescription,
-            'icon': icon
-        }
-
-        return currentWeatherObject
+        return currentWeatherJson
 
 
 class ForecastWeatherForDays(Resource):

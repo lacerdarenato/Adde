@@ -1,0 +1,488 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">
+      Gerenciamento de Funcionarios
+    </li>
+  </ol>
+</nav>
+<div class="container">
+  <div class="card list-car">
+    <h5 class="card-header">Funcionario Por nome</h5>
+    <div class="card-body">
+      <div class="form-group">
+        <div style="display: flex">
+          <input
+            type="text"
+            [(ngModel)]="Funcionario.Nome"
+            id="buscaNome"
+            name="buscaNome"
+            #nome="ngModel"
+            class="form-control"
+            placeholder="Digite o nome do funcionario"
+          />
+          <td>
+            <button
+              type="button"
+              class="btn btn-warning btn-sm"
+              (click)="getFuncionarioNome()"
+            >
+              Buscar
+            </button>
+          </td>
+        </div>
+        <table class="table" *ngIf="FuncionarioPorNome && MostrarLista">
+          <thead>
+            <tr>
+              <th scope="col">Nome</th>
+              <th scope="col">CPF</th>
+              <th scope="col">Data de cadastro</th>
+              <th scope="col">Salario</th>
+              <th scope="col">Status</th>
+              <th scope="col">Cargo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ FuncionarioPorNome.Nome }}</td>
+              <td>{{ FuncionarioPorNome.Cpf }}</td>
+              <td>{{ FuncionarioPorNome.DataCad }}</td>
+              <td>{{ FuncionarioPorNome.Salario }}</td>
+              <td>{{ FuncionarioPorNome.Status }}</td>
+              <td>{{ FuncionarioPorNome.Cargo }}</td>
+              <td>{{ FuncionarioPorNome.UfNasc }}</td>
+              <td>
+                <button
+                  type="button"
+                  class="btn btn-warning btn-sm"
+                  (click)="editFuncionario(FuncionarioPorNome)"
+                >
+                  Editar
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger btn-sm ml-1"
+                  (click)="deleteFuncionario(FuncionarioPorNome)"
+                >
+                  Deletar
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <h5 class="card-header">Funcionario Por CPF</h5>
+    <div class="card-body">
+      <div class="form-group">
+        <div style="display: flex">
+          <input
+            type="text"
+            [(ngModel)]="Funcionario.Cpf"
+            id="buscaCpf"
+            name="buscaCpf"
+            #nome="ngModel"
+            class="form-control"
+            placeholder="Digite o nome do funcionario"
+          />
+          <button
+            type="button"
+            class="btn btn-warning btn-sm"
+            (click)="getFuncionarioCpf()"
+          >
+            Buscar
+          </button>
+        </div>
+        <table class="table" *ngIf="FuncionariosPorCpf && MostrarLista">
+          <thead>
+            <tr>
+              <th scope="col">Nome</th>
+              <th scope="col">CPF</th>
+              <th scope="col">Data de cadastro</th>
+              <th scope="col">Salario</th>
+              <th scope="col">Status</th>
+              <th scope="col">Cargo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ FuncionariosPorCpf.Nome }}</td>
+              <td>{{ FuncionariosPorCpf.Cpf }}</td>
+              <td>{{ FuncionariosPorCpf.DataCad }}</td>
+              <td>{{ FuncionariosPorCpf.Salario }}</td>
+              <td>{{ FuncionariosPorCpf.Status }}</td>
+              <td>{{ FuncionariosPorCpf.Cargo }}</td>
+              <td>{{ FuncionariosPorCpf.UfNasc }}</td>
+              <td>
+                <button
+                  type="button"
+                  class="btn btn-warning btn-sm"
+                  (click)="editFuncionario(FuncionariosPorCpf)"
+                >
+                  Editar
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger btn-sm ml-1"
+                  (click)="deleteFuncionario(FuncionariosPorCpf)"
+                >
+                  Deletar
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <h5 class="card-header">Funcionario Por Cargo</h5>
+    <div class="card-body">
+      <div class="form-group">
+        <div style="display: flex">
+          <input
+            type="text"
+            [(ngModel)]="Funcionario.Cargo"
+            id="cargos"
+            name="cargos"
+            #nome="ngModel"
+            class="form-control"
+            placeholder="Digite o cargo do funcionario"
+          />
+          <button
+            type="button"
+            class="btn btn-warning btn-sm"
+            (click)="getFuncionarioPorCargo()"
+          >
+            Buscar
+          </button>
+        </div>
+        <table class="table" *ngIf="ListaFuncionariosPorCargo && MostrarLista">
+          <thead>
+            <tr>
+              <th scope="col">Nome</th>
+              <th scope="col">CPF</th>
+              <th scope="col">Data de cadastro</th>
+              <th scope="col">Salario</th>
+              <th scope="col">Status</th>
+              <th scope="col">Cargo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let FuncionarioPorCargo of ListaFuncionariosPorCargo">
+              <td>{{ FuncionarioPorCargo.Nome }}</td>
+              <td>{{ FuncionarioPorCargo.Cpf }}</td>
+              <td>{{ FuncionarioPorCargo.DataCad }}</td>
+              <td>{{ FuncionarioPorCargo.Salario }}</td>
+              <td>{{ FuncionarioPorCargo.Status }}</td>
+              <td>{{ FuncionarioPorCargo.Cargo }}</td>
+              <td>{{ FuncionarioPorCargo.UfNasc }}</td>
+              <td>
+                <button
+                  type="button"
+                  class="btn btn-warning btn-sm"
+                  (click)="editFuncionario(FuncionarioPorCargo)"
+                >
+                  Editar
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger btn-sm ml-1"
+                  (click)="deleteFuncionario(FuncionarioPorCargo)"
+                >
+                  Deletar
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <h5 class="card-header">Funcionario por faixa salarial</h5>
+    <div class="card-body">
+      <div class="form-group">
+        <div style="display: flex">
+          <input
+            type="text"
+            [(ngModel)]="faixaSalarial.min"
+            id="salarios"
+            name="salariosMin"
+            #nome="ngModel"
+            class="form-control"
+            placeholder="Digite o valor minimo do salario"
+          />
+          <input
+            type="text"
+            [(ngModel)]="faixaSalarial.max"
+            id="salariosMax"
+            name="salarios"
+            #nome="ngModel"
+            class="form-control"
+            placeholder="Digite o valor maximo do salario"
+          />
+          <button
+            type="button"
+            class="btn btn-warning btn-sm"
+            (click)="getFuncionarioPorSalario()"
+          >
+            Buscar
+          </button>
+        </div>
+        <table
+          class="table"
+          *ngIf="ListaFuncionariosPorSalario && MostrarLista"
+        >
+          <thead>
+            <tr>
+              <th scope="col">Nome</th>
+              <th scope="col">CPF</th>
+              <th scope="col">Data de cadastro</th>
+              <th scope="col">Salario</th>
+              <th scope="col">Status</th>
+              <th scope="col">Cargo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let FuncionarioPorSalario of ListaFuncionariosPorSalario"
+            >
+              <td>{{ FuncionarioPorSalario.Nome }}</td>
+              <td>{{ FuncionarioPorSalario.Cpf }}</td>
+              <td>{{ FuncionarioPorSalario.DataCad }}</td>
+              <td>{{ FuncionarioPorSalario.Salario }}</td>
+              <td>{{ FuncionarioPorSalario.Status }}</td>
+              <td>{{ FuncionarioPorSalario.Cargo }}</td>
+              <td>{{ FuncionarioPorSalario.UfNasc }}</td>
+              <td>
+                <button
+                  type="button"
+                  class="btn btn-warning btn-sm"
+                  (click)="editFuncionario(FuncionarioPorSalario)"
+                >
+                  Editar
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger btn-sm ml-1"
+                  (click)="deleteFuncionario(FuncionarioPorSalario)"
+                >
+                  Deletar
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <h5 class="card-header">Funcionario por status</h5>
+    <div class="card-body">
+      <div class="form-group">
+        <div style="display: flex">
+          <input
+            type="text"
+            [(ngModel)]="Funcionario.Status"
+            id="status"
+            name="status"
+            #nome="ngModel"
+            class="form-control"
+            placeholder="Digite o status do funcionario"
+          />
+          <button
+            type="button"
+            class="btn btn-warning btn-sm"
+            (click)="getFuncionarioPorStatus()"
+          >
+            Buscar
+          </button>
+        </div>
+        <table class="table" *ngIf="ListaFuncionariosPorStatus && MostrarLista">
+          <thead>
+            <tr>
+              <th scope="col">Nome</th>
+              <th scope="col">CPF</th>
+              <th scope="col">Data de cadastro</th>
+              <th scope="col">Salario</th>
+              <th scope="col">Status</th>
+              <th scope="col">Cargo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let FuncionarioPorStatus of ListaFuncionariosPorStatus">
+              <td>{{ FuncionarioPorStatus.Nome }}</td>
+              <td>{{ FuncionarioPorStatus.Cpf }}</td>
+              <td>{{ FuncionarioPorStatus.DataCad }}</td>
+              <td>{{ FuncionarioPorStatus.Salario }}</td>
+              <td>{{ FuncionarioPorStatus.Status }}</td>
+              <td>{{ FuncionarioPorStatus.Cargo }}</td>
+              <td>{{ FuncionarioPorStatus.UfNasc }}</td>
+              <td>
+                <button
+                  type="button"
+                  class="btn btn-warning btn-sm"
+                  (click)="editFuncionario(FuncionarioPorStatus)"
+                >
+                  Editar
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger btn-sm ml-1"
+                  (click)="deleteFuncionario(FuncionarioPorStatus)"
+                >
+                  Deletar
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card add-car">
+      <h5 class="card-header">Adicionar/Atualizar funcionarios</h5>
+      <div class="card-body">
+        <form
+          id="add-form"
+          (ngSubmit)="f.form.valid && saveFuncionario(f)"
+          #f="ngForm"
+          novalidate
+        >
+          <div class="form-group">
+            <label for="price">Nome</label>
+            <input
+              type="text"
+              [(ngModel)]="Funcionario.Nome"
+              id="nome"
+              name="nome"
+              #nome="ngModel"
+              required
+              class="form-control"
+              [ngClass]="{ 'is-invalid': f.submitted && nome.invalid }"
+              placeholder="Digite o nome"
+            />
+            <div *ngIf="f.submitted && nome.invalid" class="invalid-feedback">
+              <div *ngIf="nome.errors.required">Salario é obrigatório</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="color">Cpf</label>
+            <input
+              type="text"
+              [(ngModel)]="Funcionario.Cpf"
+              id="cpf"
+              name="cpf"
+              #cpf="ngModel"
+              required
+              class="form-control"
+              [ngClass]="{ 'is-invalid': f.submitted && cpf.invalid }"
+              placeholder="Digite o Cpf"
+            />
+            <div *ngIf="f.submitted && cpf.invalid" class="invalid-feedback">
+              <div *ngIf="cpf.errors.required">CPF é obrigatório</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="color">Uf</label>
+            <input
+              type="text"
+              [(ngModel)]="Funcionario.UfNasc"
+              id="uf"
+              name="uf"
+              #uf="ngModel"
+              required
+              class="form-control"
+              [ngClass]="{ 'is-invalid': f.submitted && uf.invalid }"
+              placeholder="Digite o uf"
+            />
+            <div *ngIf="f.submitted && uf.invalid" class="invalid-feedback">
+              <div *ngIf="uf.errors.required">CPF é obrigatório</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="model">Cargo</label>
+            <input
+              type="text"
+              [(ngModel)]="Funcionario.Cargo"
+              id="cargo"
+              name="cargo"
+              #cargo="ngModel"
+              required
+              class="form-control"
+              [ngClass]="{ 'is-invalid': f.submitted && cargo.invalid }"
+              placeholder="Digite o cargo"
+            />
+            <div *ngIf="f.submitted && cargo.invalid" class="invalid-feedback">
+              <div *ngIf="cargo.errors.required">Cargo é obrigatório</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="model">Status</label>
+            <input
+              type="text"
+              [(ngModel)]="Funcionario.Status"
+              id="status1"
+              name="status"
+              #status="ngModel"
+              required
+              class="form-control"
+              [ngClass]="{ 'is-invalid': f.submitted && status.invalid }"
+              placeholder="Digite o status"
+            />
+            <div *ngIf="f.submitted && status.invalid" class="invalid-feedback">
+              <div *ngIf="status.errors.required">Status é obrigatório</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="model">Data de Cadastro</label>
+            <input
+              type="text"
+              [(ngModel)]="Funcionario.DataCad"
+              id="dataCadastro"
+              name="dataCadastro"
+              #dataCadastro="ngModel"
+              required
+              class="form-control"
+              [ngClass]="{ 'is-invalid': f.submitted && dataCadastro.invalid }"
+              placeholder="Digite a data de cadastro Ex. XX/XX/XXXX pelo amor, não altere"
+            />
+            <div
+              *ngIf="f.submitted && dataCadastro.invalid"
+              class="invalid-feedback"
+            >
+              <div *ngIf="dataCadastro.errors.required">
+                Data de cadastro é obrigatório
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="price">Salario</label>
+            <input
+              type="number"
+              [(ngModel)]="Funcionario.Salario"
+              id="salario"
+              name="salario"
+              #salario="ngModel"
+              required
+              class="form-control"
+              [ngClass]="{ 'is-invalid': f.submitted && salario.invalid }"
+              placeholder="Digite o salario"
+            />
+            <div
+              *ngIf="f.submitted && salario.invalid"
+              class="invalid-feedback"
+            >
+              <div *ngIf="salario.errors.required">Salario é obrigatório</div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-add-car">
+            Salvar
+          </button>
+          <button
+            type="reset"
+            class="btn btn-secondary btn-add-car"
+            (click)="cleanForm(f)"
+          >
+            Cancelar
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
