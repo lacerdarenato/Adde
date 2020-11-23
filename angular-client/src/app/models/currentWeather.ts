@@ -1,6 +1,7 @@
+import { weather } from './weather';
+
 export interface currentWeather {
-    temperature: number;
-    city: string;
-    weatherDescription: string;
-    wetherIcon: string;
+    temp: number,
+    city_name: string,
+    weather: weather
 }

@@ -23,7 +23,7 @@ describe('AppComponent', () => {
   it(`should have as title 'angular-client'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.Funcionario).toEqual('angular-client');
+    expect(app.currentWeather).toEqual('angular-client');
   });
 
   it('should render title', () => {

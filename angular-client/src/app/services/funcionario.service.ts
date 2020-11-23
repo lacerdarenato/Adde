@@ -9,11 +9,12 @@ import { retry, catchError } from "rxjs/operators";
 import { currentWeather } from "../models/currentWeather";
 import { weatherList } from "../models/weatherList";
 
+
 @Injectable({
   providedIn: "root",
 })
 export class FuncionarioService {
-  url = "http://localhost:4200/api/weather/";
+  url = "http://localhost:4200/api/";
 
   constructor(private httpClient: HttpClient) { }
 
@@ -22,12 +23,12 @@ export class FuncionarioService {
   };
 
   getCurrentWeather(city: string, state: string): Observable<currentWeather> {
-    return this.httpClient.get<currentWeather>(this.url + city + "/" + state).pipe(retry(2));
+    return this.httpClient.get<currentWeather>(this.url + "weather/" + city + "/" + state).pipe(retry(2));
   }
 
   getForecastWeather(city: string, country: string, days: string): Observable<weatherList[]> {
     return this.httpClient
-      .get<weatherList[]>(this.url + "/forecastWeather/" + city + "/" + country + "/" + days)
+      .get<weatherList[]>(this.url + "forecastWeather/" + city + "/" + country + "/" + days)
       .pipe(retry(2));
   }
 

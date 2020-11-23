@@ -21,13 +21,15 @@ export class AppComponent {
   constructor(private FuncionarioService: FuncionarioService) { }
 
   getCurrentWeather() {
-    this.FuncionarioService.getCurrentWeather(
-      this.requestCurrentWeather.city,
-      this.requestCurrentWeather.state).subscribe(
-        (currentWeather: currentWeather) => {
-          this.currentWeather = currentWeather;
+    this.FuncionarioService.getCurrentWeather(this.requestCurrentWeather.city, this.requestCurrentWeather.state).subscribe(
+      (newCurrentWeather: any) => {
+        this.currentWeather = {
+          temp: newCurrentWeather.data[0].temp,
+          city_name: newCurrentWeather.data[0].city_name,
+          weather: newCurrentWeather.data[0].weather
         }
-      );
+      }
+    );
   }
 
   getForecastWeather() {
