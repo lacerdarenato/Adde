@@ -23,13 +23,13 @@ export class FuncionarioService {
   };
 
   getCurrentWeather(city: string, state: string): Observable<currentWeather> {
-    return this.httpClient.get<currentWeather>(this.url + "weather/" + city + "/" + state).pipe(retry(2));
+    return this.httpClient.get<currentWeather>(this.url + "weather/" + city + "/" + state).pipe();
   }
 
-  getForecastWeather(city: string, country: string, days: string): Observable<weatherList[]> {
+  getForecastWeather(city: string, country: string, days: string): Observable<weatherList> {
     return this.httpClient
-      .get<weatherList[]>(this.url + "forecastWeather/" + city + "/" + country + "/" + days)
-      .pipe(retry(2));
+      .get<weatherList>(this.url + "forecastWeather/" + city + "/" + country + "/" + days)
+      .pipe();
   }
 
   // Manipulação de erros

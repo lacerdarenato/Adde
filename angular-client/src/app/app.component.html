@@ -1,7 +1,7 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item active" aria-current="page">
-      Previsçoes do Tempo
+      Previsões do Tempo
     </li>
   </ol>
 </nav>
@@ -13,15 +13,16 @@
         <div style="display: flex">
           <input type="text" [(ngModel)]="requestCurrentWeather.city" id="buscaCidade" name="buscaCidade"
             #cidade="ngModel" class="form-control" placeholder="Digite a cidade desejada" />
-          <input type="text" [(ngModel)]="requestCurrentWeather.state" id="buscaCidade" name="buscaCidade"
+          <input type="text" [(ngModel)]="requestCurrentWeather.state" id="buscaEstado" name="buscaEstado"
             #cidade="ngModel" class="form-control" placeholder="Digite o estado da cidade" />
           <td>
-            <button type="button" class="btn btn-warning btn-sm" (click)="getCurrentWeather()">
+            <button id="buttonGetCurrentWeather" type="button" class="btn btn-warning btn-sm"
+              (click)="getCurrentWeather()">
               Buscar
             </button>
           </td>
         </div>
-        <table class="table" *ngIf="currentWeather && MostrarLista">
+        <table class="table" *ngIf="showCurrentWeather">
           <thead>
             <tr>
               <th scope="col">Temperatura</th>
@@ -31,11 +32,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr *ngIf="currentWeather.weather">
               <td>{{ currentWeather.temp }}</td>
               <td>{{ currentWeather.city_name }}</td>
-              <td>{{ currentWeather.weather.description }}</td>
-              <td>{{ currentWeather.weather.icon }}</td>
+              <td>{{currentWeather.weather.description}}</td>
+              <td><img src="https://www.weatherbit.io/static/img/icons/{{currentWeather.weather.icon}}.png" alt="">
+              </td>
             </tr>
           </tbody>
         </table>
@@ -45,19 +47,21 @@
     <div class="card-body">
       <div class="form-group">
         <div style="display: flex">
-          <input type="text" [(ngModel)]="requestForecastWeatherList.city" id="buscaCidade" name="buscaCidade"
-            #cidade="ngModel" class="form-control" placeholder="Digite a cidade desejada" />
-          <input type="text" [(ngModel)]="requestForecastWeatherList.country" id="buscaCidade" name="buscaCidade"
-            #cidade="ngModel" class="form-control" placeholder="Digite a sigla do país desejado (Ex. BR)" />
-          <input type="text" [(ngModel)]="requestForecastWeatherList.days" id="buscaCidade" name="buscaCidade"
-            #cidade="ngModel" class="form-control" placeholder="Quantos dias de previsão (1-16 dias)" />
+          <input type="text" [(ngModel)]="requestForecastWeatherList.city" id="buscaCidadePrevisao"
+            name="buscaCidadePrevisao" #cidade="ngModel" class="form-control" placeholder="Digite a cidade desejada" />
+          <input type="text" [(ngModel)]="requestForecastWeatherList.country" id="buscaPaisPrevisao"
+            name="buscaPaisPrevisao" #cidade="ngModel" class="form-control" placeholder="Sigla do país (Ex. BR)" />
+          <input type="text" [(ngModel)]="requestForecastWeatherList.days" id="buscaDiasPrevisao"
+            name="buscaDiasPrevisao" #cidade="ngModel" class="form-control"
+            placeholder="Quantos dias de previsão (1-16 dias)" />
           <td>
-            <button type="button" class="btn btn-warning btn-sm" (click)="getForecastWeather()">
+            <button id="buttonGetForecastWeather" type="button" class="btn btn-warning btn-sm"
+              (click)="getForecastWeather()">
               Previsão
             </button>
           </td>
         </div>
-        <table class="table" *ngIf="weatherList && MostrarLista">
+        <table class="table" *ngIf="showForecastWeather">
           <thead>
             <tr>
               <th scope="col">Data</th>
@@ -67,9 +71,9 @@
           </thead>
           <tbody>
             <tr *ngFor="let weatherList of weatherList">
-              <td>{{ weatherList.weatherForecastDate }}</td>
-              <td>{{ weatherList.weatherForecastDescription }}</td>
-              <td>{{ weatherList.WeatherForecastIcon }}</td>
+              <td>{{weatherList.valid_date  | date: 'dd/MM/yyyy'}}</td>
+              <td>{{weatherList.weather.description}}</td>
+              <td><img src="https://www.weatherbit.io/static/img/icons/{{weatherList.weather.icon}}.png" alt=""></td>
             </tr>
           </tbody>
         </table>

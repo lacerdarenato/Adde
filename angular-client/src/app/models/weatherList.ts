@@ -1,5 +1,6 @@
+import { weather } from './weather';
+
 export interface weatherList {
-  weatherForecastDate: string;
-  weatherForecastDescription: string;
-  WeatherForecastIcon: string;
+  valid_date: string;
+  weather: weather;
 }
