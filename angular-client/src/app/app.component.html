@@ -33,10 +33,11 @@
           </thead>
           <tbody>
             <tr *ngIf="currentWeather.weather">
-              <td>{{ currentWeather.temp }}</td>
-              <td>{{ currentWeather.city_name }}</td>
+              <td>{{currentWeather.temp}} °C </td>
+              <td>{{currentWeather.city_name}}</td>
               <td>{{currentWeather.weather.description}}</td>
-              <td><img src="https://www.weatherbit.io/static/img/icons/{{currentWeather.weather.icon}}.png" alt="">
+              <td><img height="50" width="50"
+                  src="https://www.weatherbit.io/static/img/icons/{{currentWeather.weather.icon}}.png" alt="">
               </td>
             </tr>
           </tbody>
@@ -53,7 +54,7 @@
             name="buscaPaisPrevisao" #cidade="ngModel" class="form-control" placeholder="Sigla do país (Ex. BR)" />
           <input type="text" [(ngModel)]="requestForecastWeatherList.days" id="buscaDiasPrevisao"
             name="buscaDiasPrevisao" #cidade="ngModel" class="form-control"
-            placeholder="Quantos dias de previsão (1-16 dias)" />
+            placeholder="dias de previsão (1-16 dias)" />
           <td>
             <button id="buttonGetForecastWeather" type="button" class="btn btn-warning btn-sm"
               (click)="getForecastWeather()">
@@ -73,7 +74,8 @@
             <tr *ngFor="let weatherList of weatherList">
               <td>{{weatherList.valid_date  | date: 'dd/MM/yyyy'}}</td>
               <td>{{weatherList.weather.description}}</td>
-              <td><img src="https://www.weatherbit.io/static/img/icons/{{weatherList.weather.icon}}.png" alt=""></td>
+              <td><img height="50" width="50"
+                  src="https://www.weatherbit.io/static/img/icons/{{weatherList.weather.icon}}.png" alt=""></td>
             </tr>
           </tbody>
         </table>
