@@ -1,24 +1,26 @@
 from flask import Flask
 from flask_restful import Resource, Api
+from flask_caching import Cache
 import requests
 from requests import get
 
 
 app = Flask(__name__)
 api = Api(app)
+cache = Cache(app, config={'CACHE_TYPE': 'simple',
+                           'CACHE_DEFAULT_TIMEOUT': 900})
 
 
 class Weather(Resource):
-
+    @cache.cached()
     def get(self, city, state):
         parametros = {'city': city,
                       'state': state,
                       'lang': 'pt',
                       'key': '258eae717aea45d39177786791a48fc7'}
-        req = requests.get(
-            'https://api.weatherbit.io/v2.0/current', params=parametros)
-        print(req.url)
-        return req.json()
+
+        return requests.get(
+            'https://api.weatherbit.io/v2.0/current', params=parametros).json()
 
 
 class WeatherIP(Resource):

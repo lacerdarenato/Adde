@@ -13,7 +13,7 @@ import { weatherList } from "../models/weatherList";
 @Injectable({
   providedIn: "root",
 })
-export class FuncionarioService {
+export class WeatherService {
   url = "http://localhost:4200/api/";
 
   constructor(private httpClient: HttpClient) { }

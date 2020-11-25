@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FuncionarioService } from "./services/funcionario.service";
+import { WeatherService } from "./services/weather.service";
 import { currentWeather } from "./models/currentWeather";
 import { weatherList } from "./models/weatherList";
 import { requestCurrentWeather } from './models/requestCurrentWeather';
@@ -22,7 +22,7 @@ export class AppComponent {
   showCurrentWeather: Boolean = false;
   showForecastWeather: Boolean = false;
 
-  constructor(private FuncionarioService: FuncionarioService) { }
+  constructor(private WeatherService: WeatherService) { }
 
   ngOnInit() {
     this.getWeatherForIP();
@@ -30,7 +30,7 @@ export class AppComponent {
 
   getCurrentWeather() {
     this.showCurrentWeather = false;
-    this.FuncionarioService.getCurrentWeather(
+    this.WeatherService.getCurrentWeather(
       this.requestCurrentWeather.city,
       this.requestCurrentWeather.state).subscribe(
         (newCurrentWeather: any) => {
@@ -49,7 +49,7 @@ export class AppComponent {
 
   getWeatherForIP() {
     this.showCurrentWeather = false;
-    this.FuncionarioService.getWeatherForIP().subscribe(
+    this.WeatherService.getWeatherForIP().subscribe(
       (newCurrentWeather: any) => {
         this.currentWeather = {
           temp: newCurrentWeather.data[0].temp,
@@ -66,7 +66,7 @@ export class AppComponent {
 
   getForecastWeather() {
     this.showForecastWeather = false;
-    this.FuncionarioService.getForecastWeather(
+    this.WeatherService.getForecastWeather(
       this.requestForecastWeatherList.city,
       this.requestForecastWeatherList.country,
       this.requestForecastWeatherList.days).subscribe(
