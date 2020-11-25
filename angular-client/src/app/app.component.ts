@@ -1,9 +1,10 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FuncionarioService } from "./services/funcionario.service";
 import { currentWeather } from "./models/currentWeather";
 import { weatherList } from "./models/weatherList";
 import { requestCurrentWeather } from './models/requestCurrentWeather';
-import { requestForecastWeatherList } from './models/requestForecastWeatherList'
+import { requestForecastWeatherList } from './models/requestForecastWeatherList';
+import { requestWeatherForIP } from './models/requestWeatherForIP';
 
 @Component({
   selector: "app-root",
@@ -16,17 +17,40 @@ export class AppComponent {
   entriesNewWeatherList = {} as any;
   requestCurrentWeather = {} as requestCurrentWeather;
   requestForecastWeatherList = {} as requestForecastWeatherList;
+  requestWeatherForIP = {} as requestWeatherForIP;
 
   showCurrentWeather: Boolean = false;
   showForecastWeather: Boolean = false;
 
   constructor(private FuncionarioService: FuncionarioService) { }
 
+  ngOnInit() {
+    this.getWeatherForIP();
+  }
+
   getCurrentWeather() {
     this.showCurrentWeather = false;
-    this.FuncionarioService.getCurrentWeather(this.requestCurrentWeather.city, this.requestCurrentWeather.state).subscribe(
+    this.FuncionarioService.getCurrentWeather(
+      this.requestCurrentWeather.city,
+      this.requestCurrentWeather.state).subscribe(
+        (newCurrentWeather: any) => {
+          this.currentWeather = {
+            temp: newCurrentWeather.data[0].temp,
+            city_name: newCurrentWeather.data[0].city_name,
+            weather: newCurrentWeather.data[0].weather
+          };
+          this.showCurrentWeather = true;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  }
+
+  getWeatherForIP() {
+    this.showCurrentWeather = false;
+    this.FuncionarioService.getWeatherForIP().subscribe(
       (newCurrentWeather: any) => {
-        console.log(newCurrentWeather);
         this.currentWeather = {
           temp: newCurrentWeather.data[0].temp,
           city_name: newCurrentWeather.data[0].city_name,

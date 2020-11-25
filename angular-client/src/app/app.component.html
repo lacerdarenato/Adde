@@ -12,14 +12,20 @@
       <div class="form-group">
         <div style="display: flex">
           <input type="text" [(ngModel)]="requestCurrentWeather.city" id="buscaCidade" name="buscaCidade"
-            #cidade="ngModel" class="form-control" placeholder="Digite a cidade desejada" />
+            #cidade="ngModel" class="form-control" placeholder="Digite a cidade desejada" type="text"
+            required="required" name="text" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" />
           <input type="text" [(ngModel)]="requestCurrentWeather.state" id="buscaEstado" name="buscaEstado"
-            #cidade="ngModel" class="form-control" placeholder="Digite o estado da cidade" />
+            #cidade="ngModel" class="form-control" placeholder="Digite o estado da cidade" type="text"
+            required="required" name="text" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" />
           <td>
             <button id="buttonGetCurrentWeather" type="button" class="btn btn-warning btn-sm"
               (click)="getCurrentWeather()">
               Buscar
             </button>
+          </td>
+          <td>
+            <button id="buttonGetWeatherForIP" type="button" class="btn btn-warning btn-sm"
+              (click)="getWeatherForIP()">IP</button>
           </td>
         </div>
         <table class="table" *ngIf="showCurrentWeather">
@@ -49,12 +55,14 @@
       <div class="form-group">
         <div style="display: flex">
           <input type="text" [(ngModel)]="requestForecastWeatherList.city" id="buscaCidadePrevisao"
-            name="buscaCidadePrevisao" #cidade="ngModel" class="form-control" placeholder="Digite a cidade desejada" />
+            name="buscaCidadePrevisao" #cidade="ngModel" class="form-control" placeholder="Digite a cidade desejada"
+            type="text" required="required" name="text" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" />
           <input type="text" [(ngModel)]="requestForecastWeatherList.country" id="buscaPaisPrevisao"
-            name="buscaPaisPrevisao" #cidade="ngModel" class="form-control" placeholder="Sigla do país (Ex. BR)" />
+            name="buscaPaisPrevisao" #cidade="ngModel" class="form-control" placeholder="Sigla do país (Ex. BR)"
+            type="text" required="required" name="text" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" />
           <input type="text" [(ngModel)]="requestForecastWeatherList.days" id="buscaDiasPrevisao"
-            name="buscaDiasPrevisao" #cidade="ngModel" class="form-control"
-            placeholder="dias de previsão (1-16 dias)" />
+            name="buscaDiasPrevisao" #cidade="ngModel" class="form-control" placeholder="dias de previsão (1-16 dias)"
+            type="number" min="1" max="16" />
           <td>
             <button id="buttonGetForecastWeather" type="button" class="btn btn-warning btn-sm"
               (click)="getForecastWeather()">

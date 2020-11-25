@@ -25,6 +25,10 @@ export class FuncionarioService {
   getCurrentWeather(city: string, state: string): Observable<currentWeather> {
     return this.httpClient.get<currentWeather>(this.url + "weather/" + city + "/" + state).pipe();
   }
+  getWeatherForIP(): Observable<currentWeather> {
+    return this.httpClient.get<currentWeather>(this.url + "weatherIP").pipe();
+  }
+
 
   getForecastWeather(city: string, country: string, days: string): Observable<weatherList> {
     return this.httpClient
